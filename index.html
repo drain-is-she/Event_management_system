@@ -6,6 +6,7 @@
     <meta name="description" content="Encore — discover college events, workshops, and experiences.">
     <title>Encore | Discover Events</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
   </head>
   <body>
     <!-- The header introduces the website. -->
@@ -33,10 +34,22 @@
             <dt>Venue</dt>
             <dd>College Innovation Lab</dd>
             <dt>Price</dt>
-            <dd>₹500 per ticket</dd>
+            <dd><span id="ticket-price" data-price="500">₹500</span> per ticket</dd>
             <dt>Total capacity</dt>
             <dd>50 attendees</dd>
           </dl>
+          <!-- JavaScript reads this selection and updates the price estimate. -->
+          <label for="ticket-quantity">Number of tickets:</label>
+          <select id="ticket-quantity" disabled>
+            <option value="1">1 ticket</option>
+            <option value="2">2 tickets</option>
+            <option value="3">3 tickets</option>
+            <option value="4">4 tickets</option>
+            <option value="5">5 tickets</option>
+            <option value="6">6 tickets</option>
+          </select>
+          <p>Estimated total: <output id="ticket-total" for="ticket-quantity" aria-live="polite">₹500</output></p>
+          <noscript><p>Enable JavaScript to change the ticket quantity and calculate the total.</p></noscript>
           <p id="booking-note">This is a sample event. Booking will be enabled in a later lesson.</p>
           <button type="button" disabled aria-describedby="booking-note">Book tickets — coming soon</button>
         </article>
