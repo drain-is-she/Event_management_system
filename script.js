@@ -4,9 +4,17 @@ const priceElement = document.querySelector("#ticket-price");
 const quantitySelect = document.querySelector("#ticket-quantity");
 const totalOutput = document.querySelector("#ticket-total");
 
-// 2. Read the unit price from HTML. HTML attribute values are strings,
-// so Number() converts "500" into the number 500 for calculations.
-const ticketPrice = Number(priceElement.dataset.price);
+// 2. Keep track of the selected event. Array positions start at zero.
+const eventSelect = document.querySelector("#event-select");
+let selectedEvent = events[0];
+
+// Create an option for each event, using its ID as the option value.
+for (const event of events) {
+  const option = document.createElement("option");
+  option.value = String(event.id);
+  option.textContent = event.title;
+  eventSelect.append(option);
+}
 
 // 3. Create a reusable formatter for Indian rupees.
 const rupees = new Intl.NumberFormat("en-IN", {
@@ -25,17 +33,47 @@ function updateTotal() {
     return;
   }
 
-  const total = ticketPrice * quantity;
+  const total = selectedEvent.price * quantity;
 
   // textContent changes the displayed text without interpreting it as HTML.
   totalOutput.textContent = rupees.format(total);
 }
 
-// 5. Listen for a user changing the dropdown, then run our function.
+// 5. Render means update the page to show the current data.
+function renderEvent() {
+  document.querySelector("#workshop-title").textContent = selectedEvent.title;
+  document.querySelector("#event-description").textContent = selectedEvent.description;
+  document.querySelector("#event-venue").textContent = selectedEvent.venue;
+  document.querySelector("#event-capacity").textContent = `${selectedEvent.capacity} attendees`;
+  priceElement.textContent = rupees.format(selectedEvent.price);
+
+  const dateElement = document.querySelector("#event-date");
+  dateElement.dateTime = selectedEvent.date;
+  dateElement.textContent = new Intl.DateTimeFormat("en-IN", {
+    dateStyle: "long",
+    timeStyle: "short",
+    timeZone: "Asia/Kolkata",
+  }).format(new Date(selectedEvent.date)) + " IST";
+
+  // Start with one ticket when switching events, then recalculate.
+  quantitySelect.value = "1";
+  updateTotal();
+}
+
+eventSelect.addEventListener("change", () => {
+  // find() returns the event whose ID matches the selected option.
+  const match = events.find(event => event.id === Number(eventSelect.value));
+  if (!match) return;
+  selectedEvent = match;
+  renderEvent();
+});
+
+// Listen for a user changing the ticket quantity.
 quantitySelect.addEventListener("change", updateTotal);
 
-// 6. Calculate the initial total and enable the interactive control.
-updateTotal();
+// 6. Display the first event and enable the interactive controls.
+renderEvent();
+eventSelect.disabled = false;
 quantitySelect.disabled = false;
 
 // This is only a browser-side estimate. It does not reserve inventory,

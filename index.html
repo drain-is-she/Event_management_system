@@ -6,6 +6,8 @@
     <meta name="description" content="Encore — discover college events, workshops, and experiences.">
     <title>Encore | Discover Events</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Deferred scripts run in this order: data first, then interaction. -->
+    <script src="events.js" defer></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -24,19 +26,22 @@
         <h2 id="events-heading">Upcoming events</h2>
         <p>Find your next college workshop or experience.</p>
 
+        <label for="event-select">Choose an event:</label>
+        <select id="event-select" disabled></select>
+
         <!-- An article represents one self-contained event card. -->
         <article aria-labelledby="workshop-title">
           <h3 id="workshop-title">Introduction to Artificial Intelligence</h3>
-          <p>A beginner-friendly workshop exploring how AI solves everyday problems.</p>
+          <p id="event-description">A beginner-friendly workshop exploring how AI solves everyday problems.</p>
           <dl>
             <dt>Date</dt>
-            <dd><time datetime="2027-02-20T10:00:00+05:30">20 February 2027, 10:00 AM IST</time></dd>
+            <dd><time id="event-date" datetime="2027-02-20T10:00:00+05:30">20 February 2027, 10:00 AM IST</time></dd>
             <dt>Venue</dt>
-            <dd>College Innovation Lab</dd>
+            <dd id="event-venue">College Innovation Lab</dd>
             <dt>Price</dt>
-            <dd><span id="ticket-price" data-price="500">₹500</span> per ticket</dd>
+            <dd><span id="ticket-price">₹500</span> per ticket</dd>
             <dt>Total capacity</dt>
-            <dd>50 attendees</dd>
+            <dd id="event-capacity">50 attendees</dd>
           </dl>
           <!-- JavaScript reads this selection and updates the price estimate. -->
           <label for="ticket-quantity">Number of tickets:</label>
@@ -49,7 +54,7 @@
             <option value="6">6 tickets</option>
           </select>
           <p>Estimated total: <output id="ticket-total" for="ticket-quantity" aria-live="polite">₹500</output></p>
-          <noscript><p>Enable JavaScript to change the ticket quantity and calculate the total.</p></noscript>
+          <noscript><p>Enable JavaScript to switch events, change the ticket quantity, and calculate the total.</p></noscript>
           <p id="booking-note">This is a sample event. Booking will be enabled in a later lesson.</p>
           <button type="button" disabled aria-describedby="booking-note">Book tickets — coming soon</button>
         </article>
