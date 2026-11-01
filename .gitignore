@@ -1,0 +1,12 @@
+# Installed dependencies: recreated by npm install.
+node_modules/
+
+# Generated builds and local-only configuration.
+dist/
+.env
+.env.*
+!.env.example
+
+# Local logs and operating-system metadata.
+*.log
+.DS_Store

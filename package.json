@@ -1,0 +1,13 @@
+{
+  "name": "encore-event-management",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A step-by-step event management learning project",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
+    "check": "node --check events.js && node --check script.js"
+  },
+  "devDependencies": {
+    "vite": "^6.4.5"
+  }
+}
